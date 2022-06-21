@@ -64,25 +64,25 @@ open class TagListView: UIView {
         }
     }
     
-    @IBInspectable open dynamic var cornerRadius: CGFloat = 0 {
+    @IBInspectable open dynamic var tagCornerRadius: CGFloat = 0 {
         didSet {
             tagViews.forEach {
-                $0.cornerRadius = cornerRadius
+                $0.tagCornerRadius = tagCornerRadius
             }
         }
     }
-    @IBInspectable open dynamic var borderWidth: CGFloat = 0 {
+    @IBInspectable open dynamic var tagBorderWidth: CGFloat = 0 {
         didSet {
             tagViews.forEach {
-                $0.borderWidth = borderWidth
+                $0.tagBorderWidth = tagBorderWidth
             }
         }
     }
     
-    @IBInspectable open dynamic var borderColor: UIColor? {
+    @IBInspectable open dynamic var tagBorderColor: UIColor? {
         didSet {
             tagViews.forEach {
-                $0.borderColor = borderColor
+                $0.tagBorderColor = tagBorderColor
             }
         }
     }
@@ -91,6 +91,14 @@ open class TagListView: UIView {
         didSet {
             tagViews.forEach {
                 $0.selectedBorderColor = selectedBorderColor
+            }
+        }
+    }
+    
+    @IBInspectable open dynamic var removeImage: UIImage? {
+        didSet {
+            tagViews.forEach {
+                $0.removeButton.image = removeImage
             }
         }
     }
@@ -140,22 +148,22 @@ open class TagListView: UIView {
             rearrangeViews()
         }
     }
-    @IBInspectable open dynamic var shadowColor: UIColor = .white {
+    @IBInspectable open dynamic var tagShadowColor: UIColor = .white {
         didSet {
             rearrangeViews()
         }
     }
-    @IBInspectable open dynamic var shadowRadius: CGFloat = 0 {
+    @IBInspectable open dynamic var tagShadowRadius: CGFloat = 0 {
         didSet {
             rearrangeViews()
         }
     }
-    @IBInspectable open dynamic var shadowOffset: CGSize = .zero {
+    @IBInspectable open dynamic var tagShadowOffset: CGSize = .zero {
         didSet {
             rearrangeViews()
         }
     }
-    @IBInspectable open dynamic var shadowOpacity: Float = 0 {
+    @IBInspectable open dynamic var tagShadowOpacity: Float = 0 {
         didSet {
             rearrangeViews()
         }
@@ -295,11 +303,11 @@ open class TagListView: UIView {
                 y: 0)
             tagBackgroundView.frame.size = tagView.bounds.size
             tagView.frame.size.width = max(minWidth, tagView.frame.size.width)
-            tagBackgroundView.layer.shadowColor = shadowColor.cgColor
-            tagBackgroundView.layer.shadowPath = UIBezierPath(roundedRect: tagBackgroundView.bounds, cornerRadius: cornerRadius).cgPath
-            tagBackgroundView.layer.shadowOffset = shadowOffset
-            tagBackgroundView.layer.shadowOpacity = shadowOpacity
-            tagBackgroundView.layer.shadowRadius = shadowRadius
+            tagBackgroundView.layer.shadowColor = tagShadowColor.cgColor
+            tagBackgroundView.layer.shadowPath = UIBezierPath(roundedRect: tagBackgroundView.bounds, cornerRadius: tagCornerRadius).cgPath
+            tagBackgroundView.layer.shadowOffset = tagShadowOffset
+            tagBackgroundView.layer.shadowOpacity = tagShadowOpacity
+            tagBackgroundView.layer.shadowRadius = tagShadowRadius
             tagBackgroundView.addSubview(tagView)
             currentRowView.addSubview(tagBackgroundView)
             
@@ -343,9 +351,9 @@ open class TagListView: UIView {
         tagView.highlightedBackgroundColor = tagHighlightedBackgroundColor
         tagView.selectedBackgroundColor = tagSelectedBackgroundColor
         tagView.titleLineBreakMode = tagLineBreakMode
-        tagView.cornerRadius = cornerRadius
-        tagView.borderWidth = borderWidth
-        tagView.borderColor = borderColor
+        tagView.tagCornerRadius = tagCornerRadius
+        tagView.tagBorderWidth = tagBorderWidth
+        tagView.tagBorderColor = tagBorderColor
         tagView.selectedBorderColor = selectedBorderColor
         tagView.paddingX = paddingX
         tagView.paddingY = paddingY
@@ -354,6 +362,7 @@ open class TagListView: UIView {
         tagView.removeButtonIconSize = removeButtonIconSize
         tagView.enableRemoveButton = enableRemoveButton
         tagView.removeIconLineColor = removeIconLineColor
+        tagView.removeButton.image = removeImage
         tagView.addTarget(self, action: #selector(tagPressed(_:)), for: .touchUpInside)
         tagView.removeButton.addTarget(self, action: #selector(removeButtonPressed(_:)), for: .touchUpInside)
         
